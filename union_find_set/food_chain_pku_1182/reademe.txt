@@ -1,0 +1,9 @@
+关系是可以传递的
+这种关系表达成的是有向边
+利用向量运算推导得未连接结点的关系值
+先定义好关系符号如：
+Define: a -(1)-> b  b 吃 a
+Define: a -(2)-> b  a 吃 b
+Define: a -(0)-> b  a = b
+r[x] 指向上结点
+so, op x, y should be represented like this: x <-(op-1)- y
