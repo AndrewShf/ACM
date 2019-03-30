@@ -65,11 +65,6 @@ void Union(int x, int y) {
             
     }   
 }  
-void Union(int a, int b) {
-    int fa = sf(a), fb = sf(b);
-        if (fa != fb) if (pw[fa] > pw[fb] || pw[fa] == pw[fb] && fa < fb) f[fb] = fa; else f[fa] = fb;
-}
-
 
 int main() {
 #ifdef local
