@@ -1,0 +1,2 @@
+dp[i] = max(dp[j]+height)  j from 0 to i-1
+sort before using
