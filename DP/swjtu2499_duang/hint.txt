@@ -1,0 +1,3 @@
+从最简单的清况观察。
+duangduang 
+new_d = number(uang) + pre(duang)
