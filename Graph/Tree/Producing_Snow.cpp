@@ -1,6 +1,20 @@
 /* http://codeforces.com/contest/948/problem/C */
 
-树状数组：
+/* 树状数组：*/
+/*
+反思：计算前缀和简化运算。
+总结：优先队列
+
+
+总结：树状数组。
+思路：想找到一堆雪在什么时候完全消融。同时数据较大，一个个比较
+不现实。思考利用前缀和计算，同时根据二分查找，亦或者lower_bound
+进行查找。不足的加在当天的数量里面，够的利用树状数组保存雪堆
+数目。
+
+*/
+
+
 #include <iostream>
 #include <cstdio>
 #include <cmath>
