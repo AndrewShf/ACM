@@ -52,10 +52,10 @@ void build(int o, int l, int r) {
     tree[o].l = yval[l];
     tree[o].r = yval[r];
     tree[o].sum = 0;
-    if (r-l == 1)
+    if (r-l == 1) // 表示一个区间，而不能是一个点
         return;
     int m = (l+r)>>1;
-    build(o<<1, l, m); build(o<<1|1, m, r);
+    build(o<<1, l, m); build(o<<1|1, m, r); // 注意不同
 }
 
 void pushup(int o) {
@@ -85,12 +85,12 @@ int main() {
             scanf("%lf %lf %lf %lf", &x1, &y1, &x2, &y2);
             node[i].x = x1; node[i].y1 = y1; node[i].y2 = y2; node[i].flag = 1;
             node[i+n].flag = -1; node[i+n].x = x2; node[i+n].y1 = y1; node[i+n].y2 = y2;
-            yval[i+1] = y1;
-            yval[i+n+1] = y2;
+            yval[i] = y1;
+            yval[i+n] = y2;
         }
-        sort(yval+1, yval+1+2*n); // 用来建树
+        sort(yval, yval+2*n); // 用来建树
         sort(node, node+2*n, cmp);
-        build(1, 1, 2*n);
+        build(1, 1, 2*n-1);
         add(1, node[0].y1, node[0].y2, node[0].flag);
         double ans = 0;
         for (int j = 1; j < 2*n; ++j) {
