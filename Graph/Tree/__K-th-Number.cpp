@@ -108,3 +108,105 @@ int main() {
     return 0;
 }
 
+
+
+#include <iostream>
+#include <cstring>
+#include <algorithm>
+#include <cmath>
+#include <cstdio>
+#include <vector>
+#include <queue>
+#include <set>
+#include <map>
+#include <unordered_map>
+#include <stack>
+#include <deque>
+
+#define ll long long
+#define ull unsigned long long
+
+using namespace std;
+
+const int MOD = 1e9+7;
+const int INF = 0x3f3f3f3f;
+const int PI = acos(-1.0);
+
+const int N = 1e5+10;
+
+int n, m, seq, total;
+
+int arr[N];
+int brr[N];
+int number[N<<5], rt[N], ls[N<<5], rs[N<<5];
+
+int getid(int val) {
+    return lower_bound(arr, arr+seq, val)-arr;
+}
+
+int build(int l, int r) {
+    int o = total++;
+    if (l == r) {
+        number[o] = 0;
+        return o;
+    }
+    int m = (l+r)>>1;
+    ls[o] = build(l, m);
+    rs[o] = build(m+1, r);
+    number[o] = number[ls[o]]+number[rs[o]];
+    return o; // need to track left son and right son
+}
+
+int add(int l, int r, int idx, int root) {
+    int o = total++;
+    if (l == r) {
+        number[o] = number[root]+1;
+        return o;
+    }
+    int m = (l+r) >> 1;
+    ls[o] = ls[root], rs[o] = rs[root]; // need information of previous segement tree
+    if (idx <= m) {
+        ls[o] = add(l, m, idx, ls[root]);
+    } else {
+        rs[o] = add(m+1, r, idx, rs[root]);
+    }
+    number[o] = number[ls[o]] + number[rs[o]];
+    return o;
+}
+
+int query(int l, int r, int ql, int qr, int k) {
+    if (l == r) {
+        return l;
+    }
+    int m = (l+r) >> 1;
+    int x = number[ls[qr]]-number[ls[ql]]; // difference
+    if (k > x) {
+        return query(m+1, r, rs[ql], rs[qr], k-x);
+    } else {
+        return query(l, m, ls[ql], ls[qr], k);
+    }
+}
+
+int main() {
+    total = 0;
+    scanf("%d%d", &n, &m);
+    for (int i = 0; i < n; ++i) {
+        scanf("%d", arr+i);
+        brr[i] = arr[i];
+    }
+    sort(arr, arr+n);
+    seq = unique(arr, arr+n)-arr;
+    rt[0] = build(0, seq-1); // 建值域线段树
+    for (int i = 0; i < n; ++i) {
+        rt[i+1] = add(0, seq-1, getid(brr[i]), rt[i]);
+    }
+    int l, r, k;
+    while (m--) {
+        scanf("%d%d%d", &l, &r, &k);
+        int idx = query(0, seq-1, rt[l-1], rt[r], k); // 拿两个根节点得到区间信息，注意是l-1
+        printf("%d\n", arr[idx]);
+    }
+    // for (int i = 0;  i < n; ++i) 
+    //     cout << arr[i] << endl;
+	return 0;
+}
