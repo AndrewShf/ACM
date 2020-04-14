@@ -90,7 +90,7 @@ int main() {
         }
         sort(yval, yval+2*n); // 用来建树
         sort(node, node+2*n, cmp);
-        build(1, 1, 2*n-1);
+        build(1, 0, 2*n-1);
         add(1, node[0].y1, node[0].y2, node[0].flag);
         double ans = 0;
         for (int j = 1; j < 2*n; ++j) {
